@@ -1,0 +1,59 @@
+sync/
+│
+├── README.md
+├── AGENTS.md
+│
+├── docs/
+│   ├── architecture.md
+│   └── decisions.md
+│
+├── src/
+│   ├── app/
+│   │   ├── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── globals.css
+│   │   ├── discover/
+│   │   │   └── page.tsx
+│   │   ├── match/
+│   │   │   └── page.tsx
+│   │   ├── rooms/
+│   │   │   ├── page.tsx
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── seniors/
+│   │   │   └── page.tsx
+│   │   └── courses/
+│   │       └── page.tsx
+│   │
+│   ├── ui/
+│   │   ├── layout/
+│   │   ├── dashboard/
+│   │   ├── discover/
+│   │   ├── match/
+│   │   ├── rooms/
+│   │   └── seniors/
+│   │
+│   ├── core/
+│   │   ├── matching.ts
+│   │   ├── room.ts
+│   │   └── session.ts
+│   │
+│   ├── data/
+│   │   ├── students.ts
+│   │   ├── courses.ts
+│   │   ├── rooms.ts
+│   │   └── seniors.ts
+│   │
+│   ├── types/
+│   │   └── index.ts
+│   │
+│   └── main/
+│       └── constants.ts
+│
+├── tests/
+│   ├── matching.test.ts
+│   ├── room.test.ts
+│   └── session.test.ts
+│
+└── public/
+    └── assets/
