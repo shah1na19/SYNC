@@ -49,10 +49,38 @@ export interface StudyRoom {
   studyGoal: string;
   status: 'Active' | 'Paused' | 'Ended';
   timerMinutes: number;
+  capacity?: number; // Max participants, when known
+  schedule?: string; // e.g. 'Evening', 'Flexible'
 }
 
 export interface MatchResult {
   student: Student;
   compatibilityScore: number; // Out of 100
   matchingReasons: string[];
+}
+
+export interface AcademicJourneyMetric {
+  id: string;
+  label: string;
+  current: number;
+  target: number;
+  unit?: string;
+}
+
+export interface StudyFocusItem {
+  id: string;
+  label: string;
+  done: boolean;
+}
+
+export type DashboardSessionKind = 'room' | 'senior';
+
+export interface UpcomingSessionItem {
+  id: string;
+  title: string;
+  timeLabel: string;
+  location: string;
+  kind: DashboardSessionKind;
+  href: string;
+  actionLabel: string;
 }
