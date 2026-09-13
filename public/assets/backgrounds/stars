@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#070B14"/>
+  <g fill="#DCEBFF">
+    <circle cx="72" cy="84" r="1.2" opacity=".55"/><circle cx="164" cy="214" r=".8" opacity=".28"/><circle cx="260" cy="92" r="1" opacity=".35"/>
+    <circle cx="344" cy="302" r=".7" opacity=".22"/><circle cx="458" cy="146" r="1.2" opacity=".45"/><circle cx="536" cy="388" r=".8" opacity=".3"/>
+    <circle cx="642" cy="78" r=".9" opacity=".38"/><circle cx="720" cy="242" r="1.3" opacity=".52"/><circle cx="816" cy="132" r=".7" opacity=".25"/>
+    <circle cx="910" cy="342" r=".9" opacity=".4"/><circle cx="1004" cy="102" r="1.1" opacity=".48"/><circle cx="1100" cy="266" r=".7" opacity=".25"/>
+    <circle cx="1218" cy="82" r="1.1" opacity=".5"/><circle cx="1320" cy="214" r=".8" opacity=".3"/><circle cx="1450" cy="112" r="1.2" opacity=".4"/>
+    <circle cx="1530" cy="330" r=".7" opacity=".25"/><circle cx="116" cy="508" r=".9" opacity=".34"/><circle cx="244" cy="610" r="1.1" opacity=".4"/>
+    <circle cx="390" cy="526" r=".7" opacity=".22"/><circle cx="520" cy="716" r="1" opacity=".32"/><circle cx="666" cy="584" r=".8" opacity=".27"/>
+    <circle cx="784" cy="760" r="1.2" opacity=".44"/><circle cx="896" cy="610" r=".7" opacity=".24"/><circle cx="1030" cy="742" r=".9" opacity=".32"/>
+    <circle cx="1158" cy="540" r="1.1" opacity=".42"/><circle cx="1286" cy="674" r=".8" opacity=".3"/><circle cx="1410" cy="548" r="1" opacity=".36"/>
+    <circle cx="1518" cy="724" r=".7" opacity=".25"/><circle cx="82" cy="866" r="1.1" opacity=".4"/><circle cx="236" cy="802" r=".7" opacity=".24"/>
+    <circle cx="382" cy="930" r="1" opacity=".3"/><circle cx="570" cy="846" r=".8" opacity=".27"/><circle cx="700" cy="956" r="1.2" opacity=".42"/>
+    <circle cx="920" cy="884" r=".8" opacity=".25"/><circle cx="1080" cy="938" r="1" opacity=".32"/><circle cx="1250" cy="832" r=".8" opacity=".28"/>
+    <circle cx="1402" cy="920" r="1.1" opacity=".4"/><circle cx="1534" cy="850" r=".8" opacity=".25"/>
+  </g>
+  <g fill="#69C9FF">
+    <circle cx="310" cy="438" r="1.5" opacity=".42"/><circle cx="738" cy="438" r="1.4" opacity=".5"/><circle cx="1260" cy="386" r="1.5" opacity=".4"/>
+    <circle cx="1360" cy="760" r="1.3" opacity=".36"/><circle cx="610" cy="180" r="1.4" opacity=".35"/>
+  </g>
+</svg>
