@@ -1,90 +1,105 @@
-import React, { useState, useEffect } from 'react';
+"use client";
 
-interface StudyTimerProps {
+import { useEffect, useState } from "react";
+import { Pause, Play, RotateCcw, Target } from "lucide-react";
+import { formatTime, calculateProgress } from "@/core/session";
+
+type StudyTimerProps = {
   initialMinutes?: number;
   goal: string;
-  onGoalChange: (newGoal: string) => void;
-}
+  onGoalChange: (goal: string) => void;
+};
 
-export const StudyTimer: React.FC<StudyTimerProps> = ({ initialMinutes = 25, goal, onGoalChange }) => {
-  const [timeLeft, setTimeLeft] = useState<number>(initialMinutes * 60);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [isEditingGoal, setIsEditingGoal] = useState<boolean>(false);
+export function StudyTimer({ initialMinutes = 25, goal, onGoalChange }: StudyTimerProps) {
+  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
+  const [isRunning, setIsRunning] = useState(false);
+  const [isEditingGoal, setIsEditingGoal] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (isRunning && timeLeft > 0) {
-      interval = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    } else if (timeLeft === 0) {
-      setIsRunning(false);
+    if (!isRunning || timeLeft <= 0) {
+      if (timeLeft <= 0) setIsRunning(false);
+      return;
     }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
+    const interval = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+    return () => clearInterval(interval);
   }, [isRunning, timeLeft]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
+  const progress = calculateProgress(timeLeft, initialMinutes);
 
   return (
-    <div className="space-y-4">
-      {/* Timer Controls */}
-      <div className="flex flex-col items-center justify-center bg-slate-800/50 p-8 rounded-xl border border-slate-700/50 text-center">
-        <div className="text-6xl font-mono font-bold tracking-wider text-emerald-400 mb-6">
+    <div className="flex flex-col gap-4">
+      <div className="surface-card flex flex-col items-center gap-5 p-8 text-center">
+        <div className="text-stat text-5xl text-primary" style={{ filter: "drop-shadow(0 0 10px var(--glow))" }}>
           {formatTime(timeLeft)}
         </div>
-        <div className="flex items-center space-x-4">
+
+        <div className="h-1.5 w-full max-w-[16rem] overflow-hidden rounded-full bg-background/60">
+          <div
+            className="h-full rounded-full bg-primary transition-[width] duration-500 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <div className="flex items-center gap-3">
           {!isRunning ? (
             <button
+              type="button"
               onClick={() => setIsRunning(true)}
-              className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg transition text-xs"
+              disabled={timeLeft <= 0}
+              className="interactive flex items-center gap-1.5 rounded-[var(--radius-md)] bg-primary px-5 py-2 text-[12px] font-semibold text-primary-foreground hover:brightness-110"
             >
+              <Play size={13} aria-hidden />
               Start
             </button>
           ) : (
             <button
+              type="button"
               onClick={() => setIsRunning(false)}
-              className="px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-medium rounded-lg transition text-xs"
+              className="interactive flex items-center gap-1.5 rounded-[var(--radius-md)] bg-warning px-5 py-2 text-[12px] font-semibold text-background hover:brightness-110"
             >
+              <Pause size={13} aria-hidden />
               Pause
             </button>
           )}
           <button
-            onClick={() => { setIsRunning(false); setTimeLeft(initialMinutes * 60); }}
-            className="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg transition text-xs"
+            type="button"
+            onClick={() => {
+              setIsRunning(false);
+              setTimeLeft(initialMinutes * 60);
+            }}
+            className="interactive flex items-center gap-1.5 rounded-[var(--radius-md)] border border-border bg-background/40 px-5 py-2 text-[12px] font-medium text-foreground hover:bg-white/[0.035]"
           >
+            <RotateCcw size={13} aria-hidden />
             Reset
           </button>
         </div>
       </div>
 
-      {/* Goal Box */}
-      <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            Current Session Goal
+      <div className="surface-card p-4">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-label flex items-center gap-1.5">
+            <Target size={12} aria-hidden />
+            Session goal
           </span>
           <button
-            onClick={() => setIsEditingGoal(!isEditingGoal)}
-            className="text-xs text-indigo-400 hover:underline"
+            type="button"
+            onClick={() => setIsEditingGoal((prev) => !prev)}
+            className="interactive text-[12px] font-medium text-primary hover:underline"
           >
-            {isEditingGoal ? 'Save' : 'Edit Goal'}
+            {isEditingGoal ? "Save" : "Edit goal"}
           </button>
         </div>
         {isEditingGoal ? (
           <input
             type="text"
             value={goal}
-            onChange={(e) => onGoalChange(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-sm text-slate-100 focus:outline-none"
+            onChange={(event) => onGoalChange(event.target.value)}
+            className="interactive mt-2 w-full rounded-[var(--radius-md)] border border-border bg-background/50 px-3 py-1.5 text-[13px] text-foreground focus:outline-none"
           />
         ) : (
-          <p className="text-sm font-medium text-slate-200">🎯 {goal}</p>
+          <p className="text-card-title mt-2">{goal}</p>
         )}
       </div>
     </div>
   );
-};
+}
