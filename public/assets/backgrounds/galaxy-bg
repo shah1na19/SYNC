@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <radialGradient id="n1" cx="0" cy="0" r="1" gradientTransform="translate(260 80) rotate(36) scale(620 350)"><stop stop-color="#2768FF" stop-opacity=".18"/><stop offset="1" stop-color="#2768FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n2" cx="0" cy="0" r="1" gradientTransform="translate(1350 220) rotate(150) scale(520 330)"><stop stop-color="#25D6D1" stop-opacity=".07"/><stop offset="1" stop-color="#25D6D1" stop-opacity="0"/></radialGradient>
+    <radialGradient id="n3" cx="0" cy="0" r="1" gradientTransform="translate(1160 930) rotate(180) scale(650 310)"><stop stop-color="#5C5DFF" stop-opacity=".10"/><stop offset="1" stop-color="#5C5DFF" stop-opacity="0"/></radialGradient>
+    <linearGradient id="orbit" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#68CFFF" stop-opacity="0"/><stop offset=".5" stop-color="#68CFFF" stop-opacity=".24"/><stop offset="1" stop-color="#7C9CFF" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="#070B14"/>
+  <ellipse cx="260" cy="80" rx="620" ry="350" fill="url(#n1)"/>
+  <ellipse cx="1350" cy="220" rx="520" ry="330" fill="url(#n2)"/>
+  <ellipse cx="1160" cy="930" rx="650" ry="310" fill="url(#n3)"/>
+  <g opacity=".45" stroke="url(#orbit)">
+    <ellipse cx="1130" cy="880" rx="620" ry="170" transform="rotate(-18 1130 880)"/>
+    <ellipse cx="1130" cy="880" rx="470" ry="128" transform="rotate(-18 1130 880)" opacity=".5"/>
+    <ellipse cx="270" cy="210" rx="390" ry="115" transform="rotate(-25 270 210)" opacity=".45"/>
+  </g>
+  <g fill="#8DD8FF"><circle cx="1390" cy="790" r="2" opacity=".42"/><circle cx="310" cy="160" r="1.7" opacity=".35"/><circle cx="1040" cy="150" r="1.5" opacity=".28"/></g>
+</svg>
