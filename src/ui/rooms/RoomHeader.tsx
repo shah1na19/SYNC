@@ -1,32 +1,36 @@
-import React from 'react';
-import { StudyRoom } from '@/types';
+import type { StudyRoom } from "@/types";
 
-interface RoomHeaderProps {
+export type FocusStatus = "Deep Work" | "Taking a Break" | "Asking Questions";
+
+type RoomHeaderProps = {
   room?: StudyRoom;
-  focusStatus: 'Deep Work' | 'Taking a Break' | 'Asking Questions';
-  onStatusChange: (status: 'Deep Work' | 'Taking a Break' | 'Asking Questions') => void;
-}
+  focusStatus: FocusStatus;
+  onStatusChange: (status: FocusStatus) => void;
+};
 
-export const RoomHeader: React.FC<RoomHeaderProps> = ({ room, focusStatus, onStatusChange }) => {
+export function RoomHeader({ room, focusStatus, onStatusChange }: RoomHeaderProps) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 bg-slate-800 p-4 rounded-lg border border-slate-700">
-      <div>
-        <h2 className="text-xl font-bold">{room?.title || 'HIVE Virtual Study Room'}</h2>
-        <p className="text-sm text-slate-400">Course ID: {room?.courseId || 'CS101'}</p>
+    <div className="surface-card flex flex-wrap items-center justify-between gap-4 p-4">
+      <div className="min-w-0">
+        <h1 className="text-page-title truncate">{room?.title ?? "Study Room"}</h1>
+        <p className="text-meta mt-1">{room?.studyGoal ?? "Focused study session"}</p>
       </div>
-      
-      <div className="flex items-center space-x-2">
-        <span className="text-xs text-slate-400 font-medium">Status:</span>
+
+      <div className="flex shrink-0 items-center gap-2">
+        <label htmlFor="focus-status" className="text-label">
+          Status
+        </label>
         <select
+          id="focus-status"
           value={focusStatus}
-          onChange={(e) => onStatusChange(e.target.value as any)}
-          className="bg-slate-700 text-xs text-emerald-400 font-semibold px-3 py-1.5 rounded border border-slate-600 focus:outline-none"
+          onChange={(event) => onStatusChange(event.target.value as FocusStatus)}
+          className="interactive rounded-[var(--radius-md)] border border-border bg-background/50 px-3 py-1.5 text-[12px] font-medium text-foreground focus:outline-none"
         >
-          <option value="Deep Work">🟢 Deep Work</option>
-          <option value="Taking a Break">☕ Taking a Break</option>
-          <option value="Asking Questions">💬 Asking Questions</option>
+          <option value="Deep Work">Deep Work</option>
+          <option value="Taking a Break">Taking a Break</option>
+          <option value="Asking Questions">Asking Questions</option>
         </select>
       </div>
     </div>
   );
-};
+}
