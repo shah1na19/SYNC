@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   BookOpen,
   Compass,
+  Crosshair,
   LayoutDashboard,
   MessageCircleQuestionMark,
   Users,
@@ -25,6 +26,7 @@ export type NavItem = {
 export const PRIMARY_NAV: NavItem[] = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/discover", label: "Discover", icon: Compass },
+  { href: "/match", label: "Match", icon: Crosshair },
   { href: "/rooms", label: "Study Rooms", icon: Users },
   { href: "/seniors", label: "Ask a Senior", icon: MessageCircleQuestionMark },
 ];
