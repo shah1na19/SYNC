@@ -1,36 +1,46 @@
-import React from 'react';
-import { Senior } from '@/types';
+import { GraduationCap, MessageCircleQuestionMark, Star } from "lucide-react";
+import type { Senior } from "@/types";
 
-interface SeniorCardProps {
+type SeniorCardProps = {
   senior: Senior;
+  courseLabels: string[];
   onSelect: (senior: Senior) => void;
-}
+};
 
-export const SeniorCard: React.FC<SeniorCardProps> = ({ senior, onSelect }) => {
+export function SeniorCard({ senior, courseLabels, onSelect }: SeniorCardProps) {
   return (
-    <div className="bg-slate-800 border border-slate-700/70 hover:border-indigo-500/50 rounded-xl p-5 flex flex-col justify-between transition shadow-lg">
+    <div className="surface-card interactive flex flex-col justify-between gap-4 p-4 hover:-translate-y-0.5 hover:border-primary/25">
       <div>
-        <div className="flex items-center space-x-4 mb-4">
-          <img 
-            src={senior.avatar} 
-            alt={senior.name} 
-            className="w-14 h-14 rounded-full border-2 border-indigo-500/30 bg-slate-900" 
+        <div className="flex items-center gap-3">
+          <img
+            src={senior.avatar}
+            alt={`${senior.name} avatar`}
+            className="h-12 w-12 rounded-full bg-elevated ring-1 ring-border"
           />
-          <div>
-            <h3 className="font-bold text-base text-slate-100">{senior.name}</h3>
-            <p className="text-xs text-indigo-400 font-medium">{senior.grade}</p>
-            <p className="text-xs text-slate-400">⭐ {senior.rating.toFixed(1)} / 5.0</p>
+          <div className="min-w-0">
+            <h3 className="text-card-title truncate">{senior.name}</h3>
+            <p className="text-meta flex items-center gap-1">
+              <GraduationCap size={12} aria-hidden />
+              {senior.grade}
+            </p>
+            <p className="text-meta flex items-center gap-1">
+              <Star size={12} className="text-warning" aria-hidden />
+              {senior.rating.toFixed(1)} / 5.0
+            </p>
           </div>
         </div>
 
-        <p className="text-xs text-slate-300 mb-4 line-clamp-2">{senior.bio}</p>
+        <p className="text-secondary mt-3 line-clamp-2">{senior.bio}</p>
 
-        <div className="mb-4">
-          <span className="text-[10px] uppercase font-semibold text-slate-400 block mb-1">Courses Handled:</span>
-          <div className="flex flex-wrap gap-1">
-            {senior.coursesHandled.map((cId) => (
-              <span key={cId} className="bg-slate-900 text-slate-300 border border-slate-700 text-[11px] px-2 py-0.5 rounded">
-                {cId.toUpperCase()}
+        <div className="mt-3">
+          <p className="text-label mb-1.5">Courses handled</p>
+          <div className="flex flex-wrap gap-1.5">
+            {courseLabels.map((label) => (
+              <span
+                key={label}
+                className="rounded-[var(--radius-sm)] border border-border bg-background/50 px-2 py-1 text-[11px] text-foreground"
+              >
+                {label}
               </span>
             ))}
           </div>
@@ -38,11 +48,13 @@ export const SeniorCard: React.FC<SeniorCardProps> = ({ senior, onSelect }) => {
       </div>
 
       <button
+        type="button"
         onClick={() => onSelect(senior)}
-        className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2 rounded-lg text-xs transition"
+        className="interactive flex items-center justify-center gap-1.5 rounded-[var(--radius-md)] bg-primary py-2 text-[12px] font-semibold text-primary-foreground hover:brightness-110"
       >
-        Ask Question
+        <MessageCircleQuestionMark size={14} aria-hidden />
+        Ask a question
       </button>
     </div>
   );
-};
+}
