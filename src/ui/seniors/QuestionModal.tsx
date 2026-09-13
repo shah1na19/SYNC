@@ -1,95 +1,115 @@
-import React, { useState } from 'react';
-import { Senior } from '@/types';
+"use client";
 
-interface QuestionModalProps {
+import { useState } from "react";
+import { X } from "lucide-react";
+import type { Senior } from "@/types";
+
+type QuestionModalProps = {
   senior: Senior;
+  courseOptions: { id: string; label: string }[];
+  defaultCourseId?: string;
   onClose: () => void;
   onSubmitSuccess: () => void;
-}
+};
 
-export const QuestionModal: React.FC<QuestionModalProps> = ({ senior, onClose, onSubmitSuccess }) => {
-  const [questionText, setQuestionText] = useState<string>('');
-  const [courseCode, setCourseCode] = useState<string>('COMP 2006E');
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+export function QuestionModal({
+  senior,
+  courseOptions,
+  defaultCourseId,
+  onClose,
+  onSubmitSuccess,
+}: QuestionModalProps) {
+  const [courseId, setCourseId] = useState(defaultCourseId ?? courseOptions[0]?.id ?? "");
+  const [questionText, setQuestionText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmitQuestion = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     if (!questionText.trim()) return;
 
     setIsSubmitting(true);
-
+    // No backend — simulate a short round trip before confirming locally.
     setTimeout(() => {
       setIsSubmitting(false);
       onSubmitSuccess();
       onClose();
-    }, 600);
+    }, 500);
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-800 border border-slate-700 rounded-xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
-        
-        <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-          <h3 className="text-base font-bold text-slate-100">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="question-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+    >
+      <div className="surface-card w-full max-w-lg p-6">
+        <div className="flex items-center justify-between gap-4 border-b border-border pb-3">
+          <h2 id="question-modal-title" className="text-card-title">
             Ask {senior.name}
-          </h3>
-          <button 
+          </h2>
+          <button
+            type="button"
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200 text-lg"
+            aria-label="Close"
+            className="interactive text-muted-foreground hover:text-foreground"
           >
-            ✕
+            <X size={18} aria-hidden />
           </button>
         </div>
 
-        <form onSubmit={handleSubmitQuestion} className="space-y-4">
+        <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-4">
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Select Related Course</label>
+            <label htmlFor="question-course" className="text-label mb-1.5 block">
+              Related course
+            </label>
             <select
-              value={courseCode}
-              onChange={(e) => setCourseCode(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none"
+              id="question-course"
+              value={courseId}
+              onChange={(event) => setCourseId(event.target.value)}
+              className="interactive w-full rounded-[var(--radius-md)] border border-border bg-background/50 px-3 py-2 text-[13px] text-foreground focus:outline-none"
             >
-              <option value="COMP 2006E">COMP 2006E — Data Structures</option>
-              <option value="COMP 3003E">COMP 3003E — Computer Networks</option>
-              <option value="EE 1007E">EE 1007E — Fundamentals of Electronic Technology</option>
-              <option value="COMP 2030E">COMP 2030E — High-level Language Programming</option>
-              <option value="MATH 1004E">MATH 1004E — Probability and Statistics</option>
-              <option value="PHYS 1001BE">PHYS 1001BE — College Physics IB</option>
-              <option value="BIO 1002E">EE 1007E — Life And Health Science</option>
+              {courseOptions.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.label}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Your Question or Help Request</label>
+            <label htmlFor="question-text" className="text-label mb-1.5 block">
+              Your question
+            </label>
             <textarea
+              id="question-text"
               rows={4}
               required
-              placeholder="E.g., How did you prepare for Professor Zhang's midterm exam? Any specific topics to prioritize?"
+              placeholder="E.g. How did you prepare for the midterm? Any topics to prioritize?"
               value={questionText}
-              onChange={(e) => setQuestionText(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-xs text-slate-100 focus:outline-none"
+              onChange={(event) => setQuestionText(event.target.value)}
+              className="interactive w-full rounded-[var(--radius-md)] border border-border bg-background/50 p-3 text-[13px] text-foreground focus:outline-none"
             />
           </div>
 
-          <div className="flex justify-end space-x-3 pt-2">
+          <div className="flex justify-end gap-2 pt-1">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs font-medium"
+              className="interactive rounded-[var(--radius-md)] border border-border bg-background/40 px-4 py-2 text-[12px] font-medium text-foreground hover:bg-white/[0.035]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-medium transition disabled:opacity-50"
+              className="interactive rounded-[var(--radius-md)] bg-primary px-4 py-2 text-[12px] font-semibold text-primary-foreground hover:brightness-110"
             >
-              {isSubmitting ? 'Sending...' : 'Submit Question'}
+              {isSubmitting ? "Sending…" : "Submit question"}
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );
-};
+}
